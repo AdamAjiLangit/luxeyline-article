@@ -4,10 +4,12 @@ import Link from "next/link";
 import { GridSlice } from "@/components/pages/homepage/grid-slice";
 import { NewsSection } from "@/components/pages/homepage/news-section";
 import { ContactSection } from "@/components/pages/homepage/contact-section";
+import { ReactLenis } from "lenis/react";
+import React from "react";
 
 export default function Home() {
   return (
-    <>
+    <ReactLenis root options={{ lerp: 0.1, duration: 1.5, smoothWheel: true }}>
       <div className="flex flex-col items-center justify-center">
         <div className="flex items-center gap-2 text-green-800">
           <p className="text-lg">⋇</p>
@@ -55,6 +57,6 @@ export default function Home() {
       <div className="flex flex-col px-5 md:px-14 mb-20 gap-20">
         <ContactSection />
       </div>
-    </>
+    </ReactLenis>
   );
 }

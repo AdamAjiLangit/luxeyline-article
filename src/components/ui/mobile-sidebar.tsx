@@ -1,57 +1,77 @@
-'use client'
+'use client';
 
-import React, { useState } from 'react'
-import Link from 'next/link'
-import { X, Menu } from 'lucide-react'
-import AnimatedLink from './animated-link'
+import Link from 'next/link';
+import { Menu } from 'lucide-react';
+import AnimatedLink from './animated-link';
+import { Sheet, SheetContent, SheetHeader, SheetTrigger, SheetClose } from '@/components/ui/sheet';
 
 const MobileSidebar = () => {
-    const [isOpen, setIsOpen] = useState(false)
-
-    const toggleSidebar = () => setIsOpen(!isOpen)
-
     return (
         <div className="md:hidden">
-            <button onClick={toggleSidebar}>
-                <Menu className="w-6 h-6" />
-            </button>
-
-            {/* Overlay */}
-            {isOpen && (
-                <div
-                    className="fixed inset-0 bg-black/50 z-40"
-                    onClick={toggleSidebar}
-                />
-            )}
-
-            {/* Sidebar */}
-            <div
-                className={`fixed top-0 right-0 h-full w-64 bg-white z-50 shadow-lg transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'
-                    }`}
-            >
-                <div className="flex justify-between items-center px-6 md:px-14 py-6 border-b">
-                    <h2 className="text-xl font-bold">Luxeyline</h2>
-                    <button onClick={toggleSidebar}>
-                        <X className="w-6 h-6" />
+            <Sheet>
+                <SheetTrigger asChild>
+                    <button aria-label="Open menu">
+                        <Menu className="w-6 h-6" />
                     </button>
-                </div>
+                </SheetTrigger>
 
-                <nav className="flex flex-col gap-6 p-6">
-                    <AnimatedLink text="Home" href="/" customStyle="text-black text-base after:bg-black" />
-                    <AnimatedLink text="Articles" href="/user/articles" customStyle="text-black text-base after:bg-black" />
-                    <AnimatedLink text="About" href="/user/about" customStyle="text-black text-base after:bg-black" />
-                    <AnimatedLink text="Contact" href="#contact" customStyle="text-black text-base after:bg-black" />
-                    <Link href="/login" className="text-black">Login</Link>
-                    <Link
-                        href="/register"
-                        className="bg-black text-white text-center rounded-full px-4 py-2 text-sm"
-                    >
-                        Register
-                    </Link>
-                </nav>
-            </div>
+                <SheetContent side="right" className="w-64 p-6">
+                    <SheetHeader className="flex flex-row items-center justify-between mb-6 p-0">
+                        <h2 className="text-xl font-bold">Luxeyline</h2>
+                    </SheetHeader>
+
+                    <nav className="flex flex-col gap-6">
+                        <SheetClose asChild>
+                            <AnimatedLink
+                                text="Home"
+                                href="/"
+                                customStyle="text-black text-base after:bg-black"
+                            />
+                        </SheetClose>
+
+                        <SheetClose asChild>
+                            <AnimatedLink
+                                text="Articles"
+                                href="/user/articles"
+                                customStyle="text-black text-base after:bg-black"
+                            />
+                        </SheetClose>
+
+                        <SheetClose asChild>
+                            <AnimatedLink
+                                text="About"
+                                href="/user/about"
+                                customStyle="text-black text-base after:bg-black"
+                            />
+                        </SheetClose>
+
+                        <SheetClose asChild>
+                            <AnimatedLink
+                                text="Contact"
+                                href="#contact"
+                                customStyle="text-black text-base after:bg-black"
+                            />
+                        </SheetClose>
+
+                        <SheetClose asChild>
+                            <Link href="/login" className="text-black">
+                                Login
+                            </Link>
+                        </SheetClose>
+
+                        <SheetClose asChild>
+                            <Link
+                                href="/register"
+                                className="bg-black text-white text-center rounded-full px-4 py-2 text-sm"
+                            >
+                                Register
+                            </Link>
+                        </SheetClose>
+                    </nav>
+                </SheetContent>
+            </Sheet>
         </div>
-    )
-}
+    );
+};
 
-export default MobileSidebar
+export default MobileSidebar;

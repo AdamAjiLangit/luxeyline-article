@@ -17,6 +17,11 @@ export type Article = {
     createdAt: string
 }
 
+export type Category = {
+    id: string;
+    name: string;
+}
+
 export type GridFullProps = {
     selectedCategory: string;
     currentPage: number;

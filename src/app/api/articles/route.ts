@@ -18,7 +18,7 @@ export async function POST(req: Request) {
         const newArticle = {
             id: articles.length + 1,
             title,
-            slug: slugify(title), // ✅ Generate slug dari judul
+            slug: slugify(title),
             description,
             thumbnail,
             category,
@@ -31,6 +31,7 @@ export async function POST(req: Request) {
 
         return NextResponse.json({ message: 'Article created', data: newArticle }, { status: 201 });
     } catch (error) {
+        console.error('POST /api/articles error:', error);
         return NextResponse.json({ error: 'Something went wrong.' }, { status: 500 });
     }
 }

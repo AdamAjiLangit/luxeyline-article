@@ -1,12 +1,14 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { articles } from '@/lib/store';
 
 export async function GET(
-    req: NextRequest,
-    { params }: { params: { id: string } }
+    req: Request,
+    context: { params: Promise<{ id: string }> }
 ) {
-    const id = Number(params.id);
-    const article = articles.find((a) => a.id === id);
+    const { id } = await context.params;
+    const idNumber = Number(id); // konversi hanya sekali
+
+    const article = articles.find((a) => a.id === idNumber);
 
     if (!article) {
         return NextResponse.json({ error: 'Article not found' }, { status: 404 });
@@ -16,13 +18,15 @@ export async function GET(
 }
 
 export async function PUT(
-    req: NextRequest,
-    { params }: { params: { id: string } }
+    req: Request,
+    context: { params: Promise<{ id: string }> }
 ) {
-    const id = Number(params.id);
+    const { id } = await context.params;
+    const idNumber = Number(id); // konversi hanya sekali
+
     const body = await req.json();
 
-    const index = articles.findIndex((a) => a.id === id);
+    const index = articles.findIndex((a) => a.id === idNumber);
     if (index === -1) {
         return NextResponse.json({ error: 'Article not found' }, { status: 404 });
     }

@@ -1,103 +1,60 @@
-import Image from "next/image";
+import { CarouselImage } from "@/components/pages/homepage/carousel";
+import { MoveRight } from "lucide-react";
+import Link from "next/link";
+import { GridSlice } from "@/components/pages/homepage/grid-slice";
+import { NewsSection } from "@/components/pages/homepage/news-section";
+import { ContactSection } from "@/components/pages/homepage/contact-section";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <>
+      <div className="flex flex-col items-center justify-center">
+        <div className="flex items-center gap-2 text-green-800">
+          <p className="text-lg">⋇</p>
+          <p className="text-sm font-lora">Top 1 Trusted Home Sales</p>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        <h1 className="px-5 md:px-0 text-xl md:text-[3.5vw] tracking-tighter text-center mt-4 mb-2 max-w-[1350px]">
+          You&apos;re Looking for a comfortable and luxurious family
+          stay, we have something for everyone.
+        </h1>
+        <p className="px-5 md:px-0 text-[#9a9696] max-w-[700px] text-sm md:text-base text-center mb-14 font-lora">
+          Our properties are situated in the most sought-after neighborhoods, <br /> offering prime access to amenities, entertainment, and prestigious schools.
+        </p>
+        <CarouselImage />
+      </div>
+      <div className="flex flex-col px-5 md:px-14 gap-10 md:gap-20 mb-20">
+        <h1 className="text-xl md:text-[2.5vw] tracking-tighter">We Are <br /> Luxeyline</h1>
+        <div className="flex flex-col-reverse lg:flex-row items-start gap-5 lg:gap-0 lg:items-end justify-between w-full">
+          <Link href='/user/about' className="flex items-center gap-2 text-green-800">
+            <p className="text-sm md:text-base">Learn more about us</p>
+            <MoveRight className="w-4 md:w-10" />
+          </Link>
+          <div className="flex items-center gap-5">
+            <div className="w-[2px] h-24 bg-black" />
+            <p className="max-w-[600px] text-sm md:text-lg font-lora tracking-tight">
+              Discover our handpicked collection of luxury homes and
+              From sleek, modern designs to classic, apartments.
+              timeless elegance, our properties boast exceptional quality
+              and stunning architecture.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div className="flex flex-col px-5 md:px-14 mb-20 gap-20">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-2">
+          <h1 className="text-xl md:text-[3.5vw] tracking-tighter">Today&apos;s Top Strories in <br /> High-End Real Estate</h1>
+          <p className="text-[#9a9696] max-w-[500px] font-lora text-sm md:text-base">
+            From insider insights to expert analysis, discover everything you need to know to make informed decisions in the high-end property market.
+          </p>
+        </div>
+        <GridSlice />
+      </div>
+      <div className="px-5 md:px-14">
+        <NewsSection />
+      </div>
+      <div className="flex flex-col px-5 md:px-14 mb-20 gap-20">
+        <ContactSection />
+      </div>
+    </>
   );
 }

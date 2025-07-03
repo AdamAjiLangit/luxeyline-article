@@ -28,3 +28,5 @@ export type GridFullProps = {
     perPage: number;
     searchQuery?: string;
 }
+
+export type RouteParams = Promise<{ id: string }>;

@@ -6,9 +6,10 @@ import { StatCard } from '@/components/pages/admin/dashboard/stat-card';
 import { Newspaper, Folder, Users, Eye } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { Article } from '@/types/types';
 
 export default function DashboardHome() {
-    const [articles, setArticles] = useState<any[]>([]);
+    const [articles, setArticles] = useState<Article[]>([]);
     const [uniqueCategories, setUniqueCategories] = useState<string[]>([]);
 
     useEffect(() => {
@@ -18,8 +19,7 @@ export default function DashboardHome() {
                 const articlesData = data.data;
                 setArticles(articlesData);
 
-                // Ambil kategori unik dari artikel
-                const categories = Array.from(new Set(articlesData.map((item: any) => item.category)));
+                const categories = Array.from(new Set(articlesData.map((item: Article) => item.category))) as string[];
                 setUniqueCategories(categories);
             } catch (error) {
                 console.error('Error fetching articles:', error);

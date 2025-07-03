@@ -1,24 +1,40 @@
 import { NextResponse } from 'next/server';
 import { categories } from '@/lib/store';
 
-export async function GET(req: Request, { params }: { params: { id: string } }) {
-    const { id } = params;
-    const category = categories.find((c) => c.id === Number(id));
+export async function GET(
+    req: Request,
+    context: { params: Promise<{ id: string }> }
+) {
+    const { id } = await context.params;
+    const idNumber = Number(id);
+
+    const category = categories.find((c) => c.id === idNumber);
     if (!category) {
         return NextResponse.json({ error: 'Not found' }, { status: 404 });
     }
+
     return NextResponse.json({ data: category });
 }
 
-// PUT untuk update
-export async function PUT(req: Request, { params }: { params: { id: string } }) {
-    const { id } = params;
+export async function PUT(
+    req: Request,
+    context: { params: Promise<{ id: string }> }
+) {
+    const { id } = await context.params;
+    const idNumber = Number(id);
+
     const body = await req.json();
-    const categoryIndex = categories.findIndex((c) => c.id === Number(id));
-    if (categoryIndex === -1) {
+
+    const index = categories.findIndex((c) => c.id === idNumber);
+    if (index === -1) {
         return NextResponse.json({ error: 'Not found' }, { status: 404 });
     }
 
-    categories[categoryIndex].name = body.name;
-    return NextResponse.json({ data: categories[categoryIndex] });
+    if (!body.name) {
+        return NextResponse.json({ error: 'Missing name field' }, { status: 400 });
+    }
+
+    categories[index].name = body.name;
+
+    return NextResponse.json({ message: 'Category updated', data: categories[index] });
 }

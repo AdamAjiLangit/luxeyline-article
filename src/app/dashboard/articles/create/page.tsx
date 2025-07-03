@@ -31,6 +31,7 @@ import {
 } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
+import Image from 'next/image';
 
 const MdEditor = dynamic(() => import('react-markdown-editor-lite'), { ssr: false });
 
@@ -197,7 +198,7 @@ export default function CreateArticles() {
                 <div className="mt-10 p-6 border rounded-md bg-muted/30">
                     <h3 className="text-xl font-semibold mb-2">{form.watch('title')}</h3>
                     <p className="text-muted-foreground mb-4">{form.watch('description')}</p>
-                    <img src={form.watch('thumbnail')} alt="Preview" className="mb-4 max-h-80 rounded-md" />
+                    <Image src={form.watch('thumbnail')} alt="Preview" className="mb-4 max-h-80 rounded-md" width={500} height={300} />
                     <article className="prose prose-lg max-w-none">
                         <ReactMarkdown>{form.watch('fullContent')}</ReactMarkdown>
                     </article>

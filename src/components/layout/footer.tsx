@@ -1,8 +1,16 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const Footer = () => {
+    const pathname = usePathname();
+
+    const HIDDEN_PATHS = ['/login', '/register'];
+    const shouldHideFooter = pathname?.startsWith('/dashboard') || HIDDEN_PATHS.includes(pathname);
+
+    if (shouldHideFooter) return null;
+
     return (
         <footer className="w-full border-t bg-transparent mt-20">
             <div className="max-w-7xl mx-auto px-6 py-12 flex flex-col md:flex-row justify-between gap-8 text-sm text-muted-foreground">

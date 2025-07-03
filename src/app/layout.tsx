@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { ReactLenis } from "lenis/react";
 // import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
+import { Toaster } from "react-hot-toast";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -23,11 +23,11 @@ export const metadata: Metadata = {
     title: 'Luxeyline News | Artikel Real Estate Terbaru',
     description:
       'Dapatkan wawasan mendalam tentang pasar properti mewah, tren terbaru, dan artikel pilihan yang dikurasi oleh tim Luxeyline.',
-    url: 'http://localhost:3000',
+    url: 'https://luxeyline-articles.netlify.app/',
     siteName: 'Luxeyline News',
     images: [
       {
-        url: 'http://localhost:3000/images/luxeyline-news.jpg',
+        url: 'assets/images/luxeyline.png',
         width: 1200,
         height: 630,
         alt: 'Luxeyline News | Artikel Properti Mewah',
@@ -48,11 +48,13 @@ export default function RootLayout({
       <body
         className={`antialiased`}
       >
-        <ReactLenis root options={{ lerp: 0.1, duration: 1.5, smoothWheel: true }}>
-          <Navbar />
-          {children}
-          <Footer />
-        </ReactLenis>
+        <Toaster
+          position="top-center"
+          reverseOrder={false}
+        />
+        <Navbar />
+        {children}
+        <Footer />
       </body>
     </html>
   );

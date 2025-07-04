@@ -46,15 +46,13 @@ export default function DashboardSidebar() {
 
     return (
         <>
-            {/* Desktop Sidebar */}
-            <aside className="hidden md:block fixed left-0 top-0 w-64 h-screen border-r bg-background z-20">
+            <aside className="hidden lg:block fixed left-0 top-0 w-64 h-screen border-r bg-background z-20">
                 {sidebarContent}
             </aside>
 
-            {/* Mobile Sidebar */}
             <Sheet open={open} onOpenChange={setOpen}>
                 <SheetTrigger asChild>
-                    <Button variant="ghost" className="md:hidden absolute right-4 top-4 z-30">
+                    <Button variant="ghost" className="lg:hidden absolute right-4 top-4 z-30">
                         <Menu className="h-6 w-6" />
                     </Button>
                 </SheetTrigger>

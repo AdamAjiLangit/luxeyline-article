@@ -6,7 +6,7 @@ export async function GET(
     context: { params: Promise<{ id: string }> }
 ) {
     const { id } = await context.params;
-    const idNumber = Number(id); // konversi hanya sekali
+    const idNumber = Number(id);
 
     const article = articles.find((a) => a.id === idNumber);
 
@@ -22,7 +22,7 @@ export async function PUT(
     context: { params: Promise<{ id: string }> }
 ) {
     const { id } = await context.params;
-    const idNumber = Number(id); // konversi hanya sekali
+    const idNumber = Number(id);
 
     const body = await req.json();
 

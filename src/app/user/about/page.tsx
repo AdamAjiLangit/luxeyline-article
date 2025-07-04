@@ -1,10 +1,19 @@
 import Image from 'next/image';
 import React from 'react';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+import { redirect } from 'next/navigation';
 import { ArrowDown, Award, Headset, ChartPie } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { ContactSection } from '@/components/pages/homepage/contact-section';
 
-const About = () => {
+const About = async () => {
+    const session = await getServerSession(authOptions);
+
+    if (session?.user?.role === 'admin') {
+        redirect('/dashboard');
+    }
+
     return (
         <>
             <div className="flex flex-col px-5 md:px-14 mb-20">

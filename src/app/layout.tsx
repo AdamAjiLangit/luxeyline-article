@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
+import { Providers } from './providers';
 import { Toaster } from "react-hot-toast";
 
 // const geistSans = Geist({
@@ -48,13 +49,15 @@ export default function RootLayout({
       <body
         className={`antialiased`}
       >
-        <Toaster
-          position="top-center"
-          reverseOrder={false}
-        />
-        <Navbar />
-        {children}
-        <Footer />
+        <Providers>
+          <Toaster
+            position="top-center"
+            reverseOrder={false}
+          />
+          <Navbar />
+          {children}
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

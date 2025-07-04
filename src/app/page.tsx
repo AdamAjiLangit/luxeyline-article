@@ -1,4 +1,7 @@
 import { CarouselImage } from "@/components/pages/homepage/carousel";
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+import { redirect } from 'next/navigation';
 import { MoveRight } from "lucide-react";
 import Link from "next/link";
 import { GridSlice } from "@/components/pages/homepage/grid-slice";
@@ -7,7 +10,13 @@ import { ContactSection } from "@/components/pages/homepage/contact-section";
 import { ReactLenis } from "lenis/react";
 import React from "react";
 
-export default function Home() {
+export default async function Home() {
+  const session = await getServerSession(authOptions);
+
+  if (session?.user?.role === 'admin') {
+    redirect('/dashboard');
+  }
+
   return (
     <ReactLenis root options={{ lerp: 0.1, duration: 1.5, smoothWheel: true }}>
       <div className="flex flex-col items-center justify-center">

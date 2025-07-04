@@ -4,6 +4,32 @@ export const categories = [
     { id: 3, name: 'investment' },
 ];
 
+export interface User {
+    id: number;
+    nama_pengguna: string;
+    email: string;
+    password: string;
+    role: 'admin' | 'user';
+}
+
+export const users = [
+    {
+        id: 1,
+        email: 'admin@example.com',
+        password: 'admin123',
+        role: 'admin',
+        nama_pengguna: 'Admin',
+    },
+    {
+        id: 2,
+        email: 'user@example.com',
+        password: 'user123',
+        role: 'user',
+        nama_pengguna: 'Adam',
+    },
+];
+
+
 export const articles = [
     {
         id: 1,

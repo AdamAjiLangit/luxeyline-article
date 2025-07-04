@@ -1,65 +1,18 @@
-'use client';
+import CreateCategoryForm from "@/components/pages/admin/category/create-category";
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+import { redirect } from 'next/navigation';
+export const dynamic = 'force-dynamic';
 
-import { useRouter } from 'next/navigation';
-import { z } from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import axios from 'axios';
-import { toast } from 'react-hot-toast';
+export default async function CreateCategoryPage() {
+    const session = await getServerSession(authOptions);
 
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+    if (!session) {
+        redirect('/login');
+    }
 
-const formSchema = z.object({
-    name: z.string().min(1, 'Category name is required'),
-});
-
-export default function CreateCategory() {
-    const router = useRouter();
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
-        defaultValues: { name: '' },
-    });
-
-    const onSubmit = async (values: z.infer<typeof formSchema>) => {
-        try {
-            await axios.post('/api/categories', values);
-            toast.success('Category created successfully!');
-            router.push('/dashboard/categories');
-        } catch (error) {
-            console.error(error);
-            toast.error('Failed to create category.');
-        }
-    };
-
-    return (
-        <div className="">
-            <h2 className="text-2xl font-bold mb-2">➕ Create Category</h2>
-            <p className="text-muted-foreground mb-6">Add a new article category to organize your content.</p>
-
-            <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                    <FormField
-                        control={form.control}
-                        name="name"
-                        render={({ field }) => (
-                            <FormItem>
-                                <Label htmlFor="name">Category Name</Label>
-                                <FormControl>
-                                    <Input id="name" placeholder="e.g. design, investment" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-
-                    <Button type="submit" disabled={form.formState.isSubmitting}>
-                        {form.formState.isSubmitting ? 'Saving...' : 'Create'}
-                    </Button>
-                </form>
-            </Form>
-        </div>
-    );
+    if (session?.user?.role !== 'admin') {
+        redirect('/user/articles');
+    }
+    return <CreateCategoryForm />;
 }

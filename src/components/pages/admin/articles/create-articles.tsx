@@ -1,47 +1,43 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
-import axios from 'axios';
-import { toast } from 'react-hot-toast';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import dynamic from 'next/dynamic';
 import 'react-markdown-editor-lite/lib/index.css';
-import { useSession } from 'next-auth/react';
-import { redirect } from 'next/navigation';
 
 import {
     Form,
-    FormControl,
     FormField,
     FormItem,
-    FormLabel,
+    FormControl,
     FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
 import {
     Select,
+    SelectTrigger,
     SelectContent,
     SelectItem,
-    SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
+import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import Image from 'next/image';
 import { articleFormSchema, ArticleFormValues } from '@/validators/articleSchema';
+import axios from 'axios';
+import { toast } from 'react-hot-toast';
 
 const MdEditor = dynamic(() => import('react-markdown-editor-lite'), { ssr: false });
 
-export default function EditArticles() {
-    const { id } = useParams();
-    const router = useRouter();
-    const { data: session } = useSession();
+interface CreateArticlesProps {
+    categories: string[];
+}
 
-    const [categories, setCategories] = useState<string[]>([]);
+export default function CreateArticles({ categories }: CreateArticlesProps) {
+    const router = useRouter();
     const [preview, setPreview] = useState(false);
 
     const form = useForm<ArticleFormValues>({
@@ -56,126 +52,95 @@ export default function EditArticles() {
         },
     });
 
-    useEffect(() => {
-        const fetchArticle = async () => {
-            try {
-                const { data } = await axios.get(`/api/articles/${id}`);
-                form.reset(data.data);
-            } catch (err) {
-                toast.error('Failed to load article');
-                console.log(err);
-            }
-        };
-
-        const fetchCategories = async () => {
-            try {
-                const { data } = await axios.get('/api/categories');
-                setCategories(data.data.map((cat: { name: string }) => cat.name));
-            } catch (err) {
-                console.error(err);
-            }
-        };
-
-        if (id) {
-            fetchArticle();
-            fetchCategories();
-        }
-    }, [id, form]);
-
     const onSubmit = async (values: ArticleFormValues) => {
         try {
-            await axios.put(`/api/articles/${id}`, values);
-            toast.success('Article updated!');
+            await axios.post('/api/articles', values);
+            toast.success('Article created successfully!');
             router.push('/dashboard/articles');
-        } catch (err) {
-            console.error(err);
-            toast.error('Failed to update article');
+        } catch (error) {
+            toast.error('Failed to create article.');
+            console.error(error);
         }
     };
 
-    if (!session) {
-        redirect('/login');
-    }
-
-    if (session?.user?.role !== 'admin') {
-        redirect('/user/articles');
-    }
-
     return (
-        <div className="max-w-3xl">
-            <h2 className="text-2xl font-bold mb-2">✏️ Edit Article</h2>
-            <p className="text-muted-foreground mb-6">Modify existing article details</p>
+        <div>
+            <h2 className="text-2xl font-bold mb-2">➕ Create Article</h2>
+            <p className="text-muted-foreground mb-6">Write a new article to be displayed on the news page.</p>
 
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                     <FormField
                         control={form.control}
                         name="title"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Title</FormLabel>
-                                <FormControl><Input {...field} /></FormControl>
+                                <Label>Title</Label>
+                                <FormControl><Input placeholder="Article title..." {...field} /></FormControl>
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
+
                     <FormField
                         control={form.control}
                         name="description"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Description</FormLabel>
-                                <FormControl><Textarea rows={3} {...field} /></FormControl>
+                                <Label>Description</Label>
+                                <FormControl><Input placeholder="Short description..." {...field} /></FormControl>
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
+
                     <FormField
                         control={form.control}
                         name="thumbnail"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Thumbnail URL</FormLabel>
-                                <FormControl><Input {...field} /></FormControl>
+                                <Label>Thumbnail URL</Label>
+                                <FormControl><Input placeholder="https://example.com/image.jpg" {...field} /></FormControl>
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
+
                     <FormField
                         control={form.control}
                         name="category"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Category</FormLabel>
-                                <FormControl>
-                                    <Select value={field.value} onValueChange={field.onChange}>
+                                <Label>Category</Label>
+                                <Select onValueChange={field.onChange} value={field.value}>
+                                    <FormControl>
                                         <SelectTrigger>
                                             <SelectValue placeholder="Select category" />
                                         </SelectTrigger>
-                                        <SelectContent>
-                                            {categories.map((cat) => (
-                                                <SelectItem key={cat} value={cat}>
-                                                    {cat.replace('-', ' ')}
-                                                </SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
-                                </FormControl>
+                                    </FormControl>
+                                    <SelectContent>
+                                        {categories.map((cat) => (
+                                            <SelectItem key={cat} value={cat}>{cat.replace('-', ' ')}</SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
+
                     <FormField
                         control={form.control}
                         name="author"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Author</FormLabel>
-                                <FormControl><Input {...field} /></FormControl>
+                                <Label>Author</Label>
+                                <FormControl><Input placeholder="Author name" {...field} /></FormControl>
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
+
                     <FormField
                         control={form.control}
                         name="fullContent"
@@ -198,13 +163,9 @@ export default function EditArticles() {
 
                     <div className="flex gap-4">
                         <Button type="submit" disabled={form.formState.isSubmitting}>
-                            {form.formState.isSubmitting ? 'Saving...' : 'Update Article'}
+                            {form.formState.isSubmitting ? 'Saving...' : 'Create'}
                         </Button>
-                        <Button
-                            type="button"
-                            variant="secondary"
-                            onClick={() => setPreview((prev) => !prev)}
-                        >
+                        <Button type="button" variant="secondary" onClick={() => setPreview((prev) => !prev)}>
                             {preview ? 'Hide Preview' : 'Preview'}
                         </Button>
                     </div>

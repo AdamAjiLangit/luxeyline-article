@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { signOut } from 'next-auth/react';
 import { Home, FileText, Layers, LogOut, Menu } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -36,6 +37,7 @@ export default function DashboardSidebar() {
                 <Button
                     variant="ghost"
                     className="cursor-pointer mt-10 w-full justify-start text-sm text-red-600 hover:text-red-700"
+                    onClick={() => signOut({ callbackUrl: '/login' })}
                 >
                     <LogOut className="mr-2 h-4 w-4" />
                     Logout

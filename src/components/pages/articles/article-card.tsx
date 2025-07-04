@@ -22,7 +22,7 @@ const formatTimeAgo = (createdAt: string) => {
 const ArticlesCard: React.FC<ArticleProps> = ({ article }) => {
     return (
         <>
-            <div className="flex flex-col md:flex-row gap-6 items-center w-full">
+            <div className="flex flex-col lg:flex-row gap-6 items-center w-full">
                 <div className="flex flex-col flex-1 justify-between gap-2">
                     <div className="bg-black/70 text-white text-xs px-3 py-1 rounded-full self-start capitalize w-fit">
                         {article.category.replace('-', ' ')}

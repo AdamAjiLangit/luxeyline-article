@@ -1,151 +1,35 @@
-'use client';
-
-import React, { useEffect, useState } from 'react';
+import CategoryTable from '@/components/pages/admin/category/category-table';
 import axios from 'axios';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from '@/components/ui/table';
-import {
-    Pagination,
-    PaginationContent,
-    PaginationItem,
-    PaginationPrevious,
-    PaginationNext,
-} from '@/components/ui/pagination';
-import Link from 'next/link';
-import { Category } from '@/types/types';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+import { redirect } from 'next/navigation';
 
-const CATEGORIES_PER_PAGE = 10;
+async function getCategories() {
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
-const CategoryArticles = () => {
-    const [categories, setCategories] = useState<Category[]>([]);
-    const [filtered, setFiltered] = useState<Category[]>([]);
-    const [search, setSearch] = useState('');
-    const [debounced, setDebounced] = useState('');
-    const [page, setPage] = useState(1);
+    try {
+        const { data } = await axios.get(`${baseUrl}/api/categories`, {
+            headers: { 'Cache-Control': 'no-store' },
+        });
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setDebounced(search);
-            setPage(1);
-        }, 400);
-        return () => clearTimeout(timer);
-    }, [search]);
+        return data.data;
+    } catch (error) {
+        console.error('Error fetching categories:', error);
+        return [];
+    }
+}
 
-    useEffect(() => {
-        const fetchCategories = async () => {
-            try {
-                const { data } = await axios.get('/api/categories');
-                setCategories(data.data);
-            } catch (error) {
-                console.error('Failed to fetch categories:', error);
-            }
-        };
-        fetchCategories();
-    }, []);
+export default async function CategoryPage() {
+    const categories = await getCategories();
+    const session = await getServerSession(authOptions);
 
-    useEffect(() => {
-        let result = categories;
-        if (debounced) {
-            result = categories.filter((cat) =>
-                cat.name.toLowerCase().includes(debounced.toLowerCase())
-            );
-        }
-        setFiltered(result);
-    }, [categories, debounced]);
+    if (!session) {
+        redirect('/login');
+    }
 
-    const paginated = filtered.slice(
-        (page - 1) * CATEGORIES_PER_PAGE,
-        page * CATEGORIES_PER_PAGE
-    );
+    if (session?.user?.role !== 'admin') {
+        redirect('/user/articles');
+    }
 
-    const totalPages = Math.ceil(filtered.length / CATEGORIES_PER_PAGE);
-
-    return (
-        <div className="flex flex-col min-h-[80vh] justify-between">
-            <div>
-                <div className="mb-6 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-                    <div>
-                        <h2 className="text-2xl font-bold">Manage Categories</h2>
-                        <p className="text-muted-foreground text-sm">List, search, and manage article categories</p>
-                    </div>
-
-                    <Button asChild>
-                        <Link href="/dashboard/categories/create">➕ Add Category</Link>
-                    </Button>
-                </div>
-
-                <div className="w-full sm:w-[300px] mb-6">
-                    <Input
-                        placeholder="Search category..."
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                    />
-                </div>
-
-                <div className="border rounded-md overflow-hidden">
-                    {paginated.length === 0 ? (
-                        <div className="p-6 text-center text-muted-foreground">No categories found.</div>
-                    ) : (
-                        <Table>
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHead>Category</TableHead>
-                                    <TableHead className="text-right">Actions</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {paginated.map((cat) => (
-                                    <TableRow key={cat.id} className="hover:bg-muted/20">
-                                        <TableCell className="capitalize">{cat.name}</TableCell>
-                                        <TableCell className="text-right">
-                                            <Link
-                                                href={`/dashboard/categories/edit/${cat.id}`}
-                                                className="text-sm text-primary hover:underline"
-                                            >
-                                                Edit
-                                            </Link>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    )}
-                </div>
-            </div>
-
-            {totalPages > 1 && (
-                <div className="mt-6">
-                    <Pagination>
-                        <PaginationContent>
-                            <PaginationItem>
-                                <PaginationPrevious
-                                    onClick={() => setPage((p) => Math.max(p - 1, 1))}
-                                    className={page === 1 ? 'pointer-events-none opacity-50' : ''}
-                                />
-                            </PaginationItem>
-                            <PaginationItem>
-                                <span className="text-sm px-4 py-2">Page {page} of {totalPages}</span>
-                            </PaginationItem>
-                            <PaginationItem>
-                                <PaginationNext
-                                    onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
-                                    className={page === totalPages ? 'pointer-events-none opacity-50' : ''}
-                                />
-                            </PaginationItem>
-                        </PaginationContent>
-                    </Pagination>
-                </div>
-            )}
-        </div>
-    );
-};
-
-export default CategoryArticles;
+    return <CategoryTable initialData={categories} />;
+}

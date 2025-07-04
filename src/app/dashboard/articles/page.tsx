@@ -1,194 +1,43 @@
-'use client';
-
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Input } from '@/components/ui/input';
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow
-} from "@/components/ui/table";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Button } from '@/components/ui/button';
-import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
-import Link from 'next/link';
+import { cookies } from 'next/headers';
+import AdminArticles from '@/components/pages/admin/articles/admin-articles';
 import { Article } from '@/types/types';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+import { redirect } from 'next/navigation';
 
-const ARTICLES_PER_PAGE = 6;
+async function getData() {
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+    const session = await getServerSession(authOptions);
 
-const AdminArticles = () => {
-    const [articles, setArticles] = useState<Article[]>([]);
-    const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
-    const [categories, setCategories] = useState<string[]>([]);
-    const [search, setSearch] = useState('');
-    const [debounced, setDebounced] = useState('');
-    const [selectedCategory, setSelectedCategory] = useState('all');
-    const [page, setPage] = useState(1);
+    if (!session) {
+        redirect('/login');
+    }
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setDebounced(search);
-            setPage(1);
-        }, 400);
-        return () => clearTimeout(timer);
-    }, [search]);
+    if (session?.user?.role !== 'admin') {
+        redirect('/user/articles');
+    }
 
-    useEffect(() => {
-        const fetchArticles = async () => {
-            try {
-                const { data } = await axios.get('/api/articles');
-                setArticles(data.data);
-            } catch (error) {
-                console.error('Failed to fetch articles:', error);
-            }
-        };
-        fetchArticles();
-    }, []);
+    const articlesRes = await fetch(`${baseUrl}/api/articles`, {
+        cache: 'no-store',
+        headers: { Cookie: cookies().toString() },
+    });
 
-    useEffect(() => {
-        const fetchCategories = async () => {
-            try {
-                const { data } = await axios.get('/api/categories');
-                const names = data.data.map((cat: { name: string }) => cat.name);
-                setCategories(names);
-            } catch (error) {
-                console.error('Failed to fetch categories:', error);
-            }
-        };
-        fetchCategories();
-    }, []);
+    const categoriesRes = await fetch(`${baseUrl}/api/categories`, {
+        cache: 'no-store',
+        headers: { Cookie: cookies().toString() },
+    });
 
-    useEffect(() => {
-        let filtered = articles;
+    const articlesData = await articlesRes.json();
+    const categoriesData = await categoriesRes.json();
 
-        if (selectedCategory !== 'all') {
-            filtered = filtered.filter((item) => item.category === selectedCategory);
-        }
+    return {
+        articles: articlesData.data as Article[],
+        categories: categoriesData.data.map((c: { name: string }) => c.name),
+    };
+}
 
-        if (debounced) {
-            filtered = filtered.filter((item) =>
-                item.title.toLowerCase().includes(debounced.toLowerCase())
-            );
-        }
+export default async function AdminArticlesPage() {
+    const { articles, categories } = await getData();
 
-        setFilteredArticles(filtered);
-    }, [articles, selectedCategory, debounced]);
-
-    const paginated = filteredArticles.slice(
-        (page - 1) * ARTICLES_PER_PAGE,
-        page * ARTICLES_PER_PAGE
-    );
-
-    const totalPages = Math.ceil(filteredArticles.length / ARTICLES_PER_PAGE);
-
-    return (
-        <div className="flex flex-col min-h-[80vh] justify-between px-4 sm:px-6 lg:px-8">
-            <div>
-                {/* Header */}
-                <div className="mb-6 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-                    <div>
-                        <h2 className="text-2xl font-bold">Manage Articles</h2>
-                        <p className="text-muted-foreground text-sm">List, search, and manage your articles</p>
-                    </div>
-                    <Button asChild className="w-full sm:w-fit">
-                        <Link href="/dashboard/articles/create">➕ Add Article</Link>
-                    </Button>
-                </div>
-
-                {/* Filter */}
-                <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-6">
-                    <Input
-                        placeholder="Search article title..."
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                        className="w-full sm:w-72"
-                    />
-                    <Select
-                        value={selectedCategory}
-                        onValueChange={(value) => {
-                            setSelectedCategory(value);
-                            setPage(1);
-                        }}
-                    >
-                        <SelectTrigger className="w-full sm:w-60">
-                            <SelectValue placeholder="Filter by category" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="all">All Categories</SelectItem>
-                            {categories.map((cat) => (
-                                <SelectItem key={cat} value={cat}>
-                                    {cat.replace('-', ' ')}
-                                </SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
-                </div>
-
-                {/* Table */}
-                <div className="w-full overflow-x-auto rounded-md border">
-                    <Table className="min-w-[700px]">
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead>Title</TableHead>
-                                <TableHead>Category</TableHead>
-                                <TableHead>Author</TableHead>
-                                <TableHead>Date</TableHead>
-                                <TableHead className="text-right">Actions</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {paginated.map((article) => (
-                                <TableRow key={article.id}>
-                                    <TableCell className="max-w-[200px] truncate whitespace-nowrap">
-                                        {article.title}
-                                    </TableCell>
-                                    <TableCell>{article.category}</TableCell>
-                                    <TableCell>{article.author}</TableCell>
-                                    <TableCell>{new Date(article.createdAt).toLocaleDateString()}</TableCell>
-                                    <TableCell className="text-right">
-                                        <Link
-                                            href={`/dashboard/articles/edit/${article.id}`}
-                                            className="text-sm text-primary hover:underline"
-                                        >
-                                            Edit
-                                        </Link>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </div>
-            </div>
-
-            {/* Pagination */}
-            {totalPages > 1 && (
-                <div className="mt-6 flex justify-center">
-                    <Pagination>
-                        <PaginationContent>
-                            <PaginationItem>
-                                <PaginationPrevious
-                                    onClick={() => setPage((p) => Math.max(p - 1, 1))}
-                                    className={page === 1 ? 'pointer-events-none opacity-50' : ''}
-                                />
-                            </PaginationItem>
-                            <PaginationItem>
-                                <span className="text-sm px-4 py-2">Page {page} of {totalPages}</span>
-                            </PaginationItem>
-                            <PaginationItem>
-                                <PaginationNext
-                                    onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
-                                    className={page === totalPages ? 'pointer-events-none opacity-50' : ''}
-                                />
-                            </PaginationItem>
-                        </PaginationContent>
-                    </Pagination>
-                </div>
-            )}
-        </div>
-    );
-};
-
-export default AdminArticles;
+    return <AdminArticles articles={articles} categories={categories} />;
+}

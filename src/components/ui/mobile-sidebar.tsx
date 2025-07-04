@@ -1,11 +1,16 @@
 'use client';
 
 import Link from 'next/link';
-import { Menu } from 'lucide-react';
-import AnimatedLink from './animated-link';
+import { LogOut, Menu } from 'lucide-react';
+import { useSession, signOut } from 'next-auth/react';
 import { Sheet, SheetContent, SheetHeader, SheetTrigger, SheetClose } from '@/components/ui/sheet';
+import AnimatedLink from './animated-link';
+import { Button } from '@/components/ui/button';
 
 const MobileSidebar = () => {
+    const { data: session, status } = useSession();
+    const isLoggedIn = status === 'authenticated';
+
     return (
         <div className="md:hidden">
             <Sheet>
@@ -53,20 +58,40 @@ const MobileSidebar = () => {
                             />
                         </SheetClose>
 
-                        <SheetClose asChild>
-                            <Link href="/login" className="text-black">
-                                Login
-                            </Link>
-                        </SheetClose>
+                        {isLoggedIn ? (
+                            <>
+                                <div className="text-black font-medium text-base">
+                                    Hi, {session?.user?.nama_pengguna}
+                                </div>
+                                <SheetClose asChild>
+                                    <Button
+                                        variant="ghost"
+                                        className="text-red-600 text-base w-fit px-0 justify-start"
+                                        onClick={() => signOut({ callbackUrl: '/login' })}
+                                    >
+                                        <LogOut className="w-4 h-4 mr-2" />
+                                        Logout
+                                    </Button>
+                                </SheetClose>
+                            </>
+                        ) : (
+                            <>
+                                <SheetClose asChild>
+                                    <Link href="/login" className="text-black text-base">
+                                        Login
+                                    </Link>
+                                </SheetClose>
 
-                        <SheetClose asChild>
-                            <Link
-                                href="/register"
-                                className="bg-black text-white text-center rounded-full px-4 py-2 text-sm"
-                            >
-                                Register
-                            </Link>
-                        </SheetClose>
+                                <SheetClose asChild>
+                                    <Link
+                                        href="/register"
+                                        className="bg-black text-white text-center rounded-full px-4 py-2 text-sm"
+                                    >
+                                        Register
+                                    </Link>
+                                </SheetClose>
+                            </>
+                        )}
                     </nav>
                 </SheetContent>
             </Sheet>

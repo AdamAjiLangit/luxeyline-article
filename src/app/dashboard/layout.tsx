@@ -6,13 +6,14 @@ import Topbar from '@/components/layout/admin/top-bar';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
     return (
-        <div className="flex h-screen overflow-hidden">
-            <DashboardSidebar />
+        <div className="min-h-screen flex flex-col lg:flex-row bg-muted/10">
+            <div className="w-full lg:w-72">
+                <DashboardSidebar />
+            </div>
 
             <div className="flex flex-col flex-1">
                 <Topbar />
-
-                <main className="flex-1 overflow-y-auto bg-muted/10 p-6 pt-20 md:pl-72">
+                <main className="flex-1 p-4 pt-20 overflow-x-auto">
                     {children}
                 </main>
             </div>

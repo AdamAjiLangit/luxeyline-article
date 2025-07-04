@@ -61,7 +61,6 @@ const AdminArticles = () => {
         fetchCategories();
     }, []);
 
-
     useEffect(() => {
         let filtered = articles;
 
@@ -86,24 +85,26 @@ const AdminArticles = () => {
     const totalPages = Math.ceil(filteredArticles.length / ARTICLES_PER_PAGE);
 
     return (
-        <div className="flex flex-col min-h-[80vh] justify-between">
+        <div className="flex flex-col min-h-[80vh] justify-between px-4 sm:px-6 lg:px-8">
             <div>
-                <div className="mb-6 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+                {/* Header */}
+                <div className="mb-6 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
                     <div>
                         <h2 className="text-2xl font-bold">Manage Articles</h2>
                         <p className="text-muted-foreground text-sm">List, search, and manage your articles</p>
                     </div>
-                    <Button asChild>
+                    <Button asChild className="w-full sm:w-fit">
                         <Link href="/dashboard/articles/create">➕ Add Article</Link>
                     </Button>
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-4 mb-6">
+                {/* Filter */}
+                <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-6">
                     <Input
                         placeholder="Search article title..."
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
-                        className="w-full sm:w-[300px]"
+                        className="w-full sm:w-72"
                     />
                     <Select
                         value={selectedCategory}
@@ -112,7 +113,7 @@ const AdminArticles = () => {
                             setPage(1);
                         }}
                     >
-                        <SelectTrigger className="w-full sm:w-[200px]">
+                        <SelectTrigger className="w-full sm:w-60">
                             <SelectValue placeholder="Filter by category" />
                         </SelectTrigger>
                         <SelectContent>
@@ -126,45 +127,45 @@ const AdminArticles = () => {
                     </Select>
                 </div>
 
-                <div className="border rounded-md overflow-hidden">
-                    {paginated.length === 0 ? (
-                        <div className="p-6 text-center text-muted-foreground">No articles found.</div>
-                    ) : (
-                        <Table>
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHead>Title</TableHead>
-                                    <TableHead>Category</TableHead>
-                                    <TableHead>Author</TableHead>
-                                    <TableHead>Date</TableHead>
-                                    <TableHead className="text-right">Actions</TableHead>
+                {/* Table */}
+                <div className="w-full overflow-x-auto rounded-md border">
+                    <Table className="min-w-[700px]">
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead>Title</TableHead>
+                                <TableHead>Category</TableHead>
+                                <TableHead>Author</TableHead>
+                                <TableHead>Date</TableHead>
+                                <TableHead className="text-right">Actions</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {paginated.map((article) => (
+                                <TableRow key={article.id}>
+                                    <TableCell className="max-w-[200px] truncate whitespace-nowrap">
+                                        {article.title}
+                                    </TableCell>
+                                    <TableCell>{article.category}</TableCell>
+                                    <TableCell>{article.author}</TableCell>
+                                    <TableCell>{new Date(article.createdAt).toLocaleDateString()}</TableCell>
+                                    <TableCell className="text-right">
+                                        <Link
+                                            href={`/dashboard/articles/edit/${article.id}`}
+                                            className="text-sm text-primary hover:underline"
+                                        >
+                                            Edit
+                                        </Link>
+                                    </TableCell>
                                 </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {paginated.map((article) => (
-                                    <TableRow key={article.id} className="hover:bg-muted/20">
-                                        <TableCell>{article.title}</TableCell>
-                                        <TableCell className="capitalize">{article.category.replace('-', ' ')}</TableCell>
-                                        <TableCell>{article.author}</TableCell>
-                                        <TableCell>{new Date(article.createdAt).toLocaleDateString()}</TableCell>
-                                        <TableCell className="text-right">
-                                            <Link
-                                                href={`/dashboard/articles/edit/${article.id}`}
-                                                className="text-sm text-primary hover:underline"
-                                            >
-                                                Edit
-                                            </Link>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    )}
+                            ))}
+                        </TableBody>
+                    </Table>
                 </div>
             </div>
 
+            {/* Pagination */}
             {totalPages > 1 && (
-                <div className="mt-6">
+                <div className="mt-6 flex justify-center">
                     <Pagination>
                         <PaginationContent>
                             <PaginationItem>

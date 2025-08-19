@@ -56,13 +56,6 @@ const Navbar = () => {
                             <LogOut className="w-4 h-4 mr-2" />
                             Logout
                         </Button>
-                        <AnimatedButton
-                            id="create-article"
-                            title="Create Article"
-                            onClick={() => console.log('Create Article')}
-                            rightIcon={<LogOut className="w-4 h-4 mr-2" />}
-                            containerClass="bg-secondary flex-center border border-text/50 text-text"
-                        />
                     </>
                 ) : (
                     <>

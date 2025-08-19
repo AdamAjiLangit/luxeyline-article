@@ -2,10 +2,10 @@
 
 import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { MoveRight } from 'lucide-react';
 import { Article } from '@/types/types';
 import { Separator } from '@/components/ui/separator';
+import AnimatedLinkNew from '@/components/ui/animated-link-new';
 
 interface ArticleProps {
     article: Article;
@@ -33,10 +33,13 @@ const ArticlesCard: React.FC<ArticleProps> = ({ article }) => {
 
                     <div className="flex flex-col gap-5 text-sm text-gray-500 mt-auto pt-4">
                         <span>{formatTimeAgo(article.createdAt)}</span>
-                        <Link href={`/user/articles/${article.slug}`} className="text-white bg-black w-fit p-3 rounded-full flex items-center gap-2">
-                            <p>View Article</p>
-                            <MoveRight size={16} />
-                        </Link>
+                        <AnimatedLinkNew
+                            id='view-article-link'
+                            href={`/user/articles/${article.slug}`}
+                            title='View Article'
+                            containerClass='text-white bg-black w-fit p-3 rounded-full flex items-center gap-2'
+                            rightIcon={<MoveRight size={16} />}
+                        />
                     </div>
                 </div>
 

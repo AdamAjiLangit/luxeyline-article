@@ -6,6 +6,7 @@ import { GridFull } from '@/components/pages/homepage/grid-full';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { Input } from '@/components/ui/input';
+import TextReveal from '@/components/ui/text-reveal';
 
 const ARTICLES_PER_PAGE = 6;
 
@@ -55,10 +56,11 @@ export const NewsSection = () => {
     return (
         <div className="flex flex-col mb-20 gap-20">
             <div className="flex flex-col xl:flex-row justify-between items-start xl:items-end gap-4">
-                <h1 className="text-xl md:text-[3.5vw] tracking-tighter leading-tight">
-                    Latest News: Luxeyline <br /> insights and inspiration
-                </h1>
-
+                <TextReveal animateOnScroll={true}>
+                    <h1 className="text-xl md:text-[3.5vw] tracking-tighter leading-tight">
+                        Latest News: Luxeyline <br /> insights and inspiration
+                    </h1>
+                </TextReveal>
                 <div className="flex flex-col items-start xl:items-end gap-5 w-auto">
                     <Input
                         placeholder="Search articles..."

@@ -1,3 +1,4 @@
+
 export type AnimatedLinkProps = {
     href: string;
     text: string;
@@ -27,6 +28,12 @@ export type GridFullProps = {
     currentPage: number;
     perPage: number;
     searchQuery?: string;
+}
+
+export type CopyProps<T extends HTMLElement = HTMLElement> = {
+    children: React.ReactElement<{ ref?: React.Ref<T> }>;
+    animateOnScroll?: boolean;
+    delay?: number;
 }
 
 export type RouteParams = Promise<{ id: string }>;

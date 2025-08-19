@@ -1,18 +1,20 @@
-interface AnimatedButtonProps {
+import Link from "next/link";
+
+interface AnimatedLinkNewProps {
     id: string;
     title: string;
-    onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    href: string;
     rightIcon?: React.ReactNode;
     leftIcon?: React.ReactNode;
     containerClass?: string;
 }
 
-const AnimatedButton: React.FC<AnimatedButtonProps> = ({ id, title, onClick, rightIcon, leftIcon, containerClass = "" }) => {
+const AnimatedLinkNew: React.FC<AnimatedLinkNewProps> = ({ id, title, rightIcon, leftIcon, containerClass = "", href }) => {
     return (
-        <button
+        <Link
             id={id}
             className={`group relative w-fit cursor-pointer overflow-hidden ${containerClass}`}
-            onClick={onClick}
+            href={href}
         >
             <div className="flex items-center gap-2"> {/* 👈 flex row */}
                 {leftIcon}
@@ -28,8 +30,8 @@ const AnimatedButton: React.FC<AnimatedButtonProps> = ({ id, title, onClick, rig
 
                 {rightIcon}
             </div>
-        </button>
+        </Link>
     );
 };
 
-export default AnimatedButton;
+export default AnimatedLinkNew;

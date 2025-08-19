@@ -2,9 +2,9 @@
 
 import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { MoveRight } from 'lucide-react';
 import { Article } from '@/types/types';
+import AnimatedLinkNew from '@/components/ui/animated-link-new';
 
 interface ArticleProps {
     article: Article;
@@ -39,10 +39,13 @@ const ArticleCard: React.FC<ArticleProps> = ({ article }) => {
                 <p className="text-sm text-muted-foreground font-lora">{article.description}</p>
                 <div className="flex justify-between items-center text-sm text-gray-500 mt-auto pt-6 min-h-[60px]">
                     <span>{formatTimeAgo(article.createdAt)}</span>
-                    <Link href={`/user/articles/${article.slug}`} className="text-black flex items-center gap-2">
-                        <p>View Article</p>
-                        <MoveRight size={16} />
-                    </Link>
+                    <AnimatedLinkNew
+                        id='view-article-link'
+                        href={`/user/articles/${article.slug}`}
+                        title='View Article'
+                        containerClass='text-black flex items-center gap-2'
+                        rightIcon={<MoveRight size={16} />}
+                    />
                 </div>
             </div>
         </div>

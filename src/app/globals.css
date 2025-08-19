@@ -65,6 +65,10 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
 body {
   background: var(--background-primary);
   color: var(--foreground);

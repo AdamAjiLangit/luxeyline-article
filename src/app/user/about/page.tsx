@@ -17,7 +17,7 @@ const About = async () => {
 
     return (
         <>
-            <div className="flex flex-col px-5 md:px-14 mb-20">
+            <div className="flex flex-col px-5 md:px-14 mb-20 mt-32">
                 <Image
                     src="/assets/images/about.jpg"
                     alt="About Us"

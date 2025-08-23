@@ -9,6 +9,7 @@ import { MoveLeft } from 'lucide-react';
 import Link from 'next/link';
 import { Article } from '@/types/types';
 import ReactMarkdown from 'react-markdown';
+import AnimatedLinkNew from '@/components/ui/animated-link-new';
 
 const ArticleDetail = () => {
     const { slug } = useParams();
@@ -42,10 +43,19 @@ const ArticleDetail = () => {
 
     return (
         <div className="max-w-4xl mx-auto px-6">
-            <Link href="/user/articles" className="flex items-center gap-2 text-sm text-gray-500 mb-6 hover:text-black transition">
+            {/* <Link href="/user/articles" className="flex items-center gap-2 text-sm text-gray-500 mb-6 hover:text-black transition">
                 <MoveLeft size={18} />
                 Back to Articles
-            </Link>
+            </Link> */}
+            <div className='mb-6'>
+                <AnimatedLinkNew
+                    id="learn-more"
+                    title="Back to Articles"
+                    href="/user/articles"
+                    leftIcon={<MoveLeft size={18} />}
+                    containerClass="bg-transparent flex-center text-sm md:text-base text-gray-500"
+                />
+            </div>
 
             <div className="mb-6">
                 <span className="text-sm uppercase tracking-wide bg-black/80 text-white px-3 py-1 rounded-full">

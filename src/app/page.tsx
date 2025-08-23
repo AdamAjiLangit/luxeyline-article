@@ -20,7 +20,7 @@ export default async function Home() {
 
   return (
     <ReactLenis root options={{ lerp: 0.1, duration: 1.5, smoothWheel: true }}>
-      <div className="flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center justify-center mt-32">
         <div className="flex items-center gap-2 text-green-800">
           <TextReveal delay={0.3}>
             <p className="text-lg">⋇</p>

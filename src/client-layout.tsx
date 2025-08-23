@@ -8,6 +8,7 @@ import { Providers } from "./app/providers";
 import { Toaster } from "react-hot-toast";
 import { ReactLenis } from "lenis/react";
 import { ReactNode } from "react";
+import PageTransition from "./components/layout/page-transition";
 
 interface ClientLayoutProps {
     children: ReactNode;
@@ -62,10 +63,12 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
     return (
         <ReactLenis root options={scrollSettings}>
             <Providers>
-                <Toaster position="top-center" reverseOrder={false} />
-                <Navbar />
-                {children}
-                <Footer />
+                <PageTransition>
+                    <Toaster position="top-center" reverseOrder={false} />
+                    <Navbar />
+                    {children}
+                    <Footer />
+                </PageTransition>
             </Providers>
         </ReactLenis>
     );

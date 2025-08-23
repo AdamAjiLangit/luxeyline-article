@@ -28,6 +28,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-real: var(--background-primary);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -224,6 +225,33 @@ html {
 .cta:hover .hover-underline-animation:after {
   transform: scaleX(1);
   transform-origin: bottom left;
+}
+
+/* Transition Pages */
+
+.transition-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100svh;
+  display: flex;
+  pointer-events: none;
+  z-index: 50;
+}
+
+.block {
+  flex: 1;
+  height: 100%;
+  background: #222;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.char {
+  position: relative;
+  display: inline-block;
+  will-change: transform;
 }
 
 @layer base {

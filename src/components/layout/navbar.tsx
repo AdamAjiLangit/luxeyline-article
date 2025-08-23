@@ -30,7 +30,7 @@ const Navbar = () => {
     };
 
     return (
-        <div className='px-6 md:px-14 py-6 bg-transparent flex justify-between items-center mb-10'>
+        <div className='fixed top-0 left-0 right-0 z-20 bg-real/80 backdrop-blur-md shadow-sm px-6 md:px-14 py-6 flex justify-between items-center'>
             <div className='flex items-center gap-3 text-xl font-bold'>
                 <Link href='/'>Luxeyline</Link>
             </div>
@@ -77,15 +77,6 @@ const Navbar = () => {
                             }}
                             containerClass="bg-transparent border border-black rounded-full px-5 py-2 flex-center md:text-base lg:text-lg"
                         />
-                        {/* <Link href="/login" className='md:text-base lg:text-lg'>
-                            Login
-                        </Link>
-                        <Link
-                            href="/register"
-                            className='bg-transparent text-black md:text-base lg:text-lg rounded-full px-5 py-2 border-2 border-black hover:bg-black hover:text-white transition-colors duration-300'
-                        >
-                            Register
-                        </Link> */}
                     </>
                 )}
             </div>

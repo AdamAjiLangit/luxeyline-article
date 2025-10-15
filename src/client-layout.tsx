@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 
 import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
-import { Providers } from "./app/providers";
 import { Toaster } from "react-hot-toast";
 import { ReactLenis } from "lenis/react";
 import { ReactNode } from "react";
@@ -62,14 +61,12 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
 
     return (
         <ReactLenis root options={scrollSettings}>
-            <Providers>
-                <PageTransition>
-                    <Toaster position="top-center" reverseOrder={false} />
-                    <Navbar />
-                    {children}
-                    <Footer />
-                </PageTransition>
-            </Providers>
+            <PageTransition>
+                <Toaster position="top-center" reverseOrder={false} />
+                <Navbar />
+                {children}
+                <Footer />
+            </PageTransition>
         </ReactLenis>
     );
 }

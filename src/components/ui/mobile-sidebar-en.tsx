@@ -5,7 +5,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTrigger, SheetClose } from '@/co
 import AnimatedLink from './animated-link';
 import LangSwitcher from '@/hooks/langSwitcher';
 
-const MobileSidebar = () => {
+const MobileSidebarEN = () => {
     return (
         <div className="xl:hidden">
             <Sheet>
@@ -23,7 +23,7 @@ const MobileSidebar = () => {
                     <nav className="flex flex-col gap-6">
                         <SheetClose asChild>
                             <AnimatedLink
-                                text="Beranda"
+                                text="Home"
                                 href="/"
                                 customStyle="text-black text-base after:bg-black"
                             />
@@ -31,40 +31,40 @@ const MobileSidebar = () => {
 
                         <SheetClose asChild>
                             <AnimatedLink
-                                text="Tentang"
-                                href="/tentang"
+                                text="About"
+                                href="/about"
                                 customStyle="text-black text-base after:bg-black"
                             />
                         </SheetClose>
 
                         <SheetClose asChild>
                             <AnimatedLink
-                                text="Kontak"
-                                href="/kontak"
+                                text="Contact"
+                                href="/contact"
                                 customStyle="text-black text-base after:bg-black"
                             />
                         </SheetClose>
 
                         <SheetClose asChild>
                             <AnimatedLink
-                                text="Kebijakan"
-                                href="/kebijakan"
+                                text="Privacy Policy"
+                                href="/privacy-policy"
                                 customStyle="text-black text-base after:bg-black"
                             />
                         </SheetClose>
 
                         <SheetClose asChild>
                             <AnimatedLink
-                                text="Syarat & Ketentuan"
-                                href="/syarat-ketentuan"
+                                text="Terms & Conditions"
+                                href="/terms"
                                 customStyle="text-black text-base after:bg-black"
                             />
                         </SheetClose>
 
                         <SheetClose asChild>
                             <AnimatedLink
-                                text="Pengembalian Dana"
-                                href="/pengembalian-dana"
+                                text="Refund Policy"
+                                href="/refund-policy"
                                 customStyle="text-black text-base after:bg-black"
                             />
                         </SheetClose>
@@ -72,7 +72,6 @@ const MobileSidebar = () => {
                         <SheetClose asChild>
                             <LangSwitcher />
                         </SheetClose>
-
                     </nav>
                 </SheetContent>
             </Sheet>
@@ -80,4 +79,4 @@ const MobileSidebar = () => {
     );
 };
 
-export default MobileSidebar;
+export default MobileSidebarEN;

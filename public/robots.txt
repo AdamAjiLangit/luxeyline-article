@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Block sensitive or unnecessary paths (adjust as needed)
+Disallow: /api/
+Disallow: /_next/
+Disallow: /static/
+
+Sitemap: https://silughoh.com/sitemap.xml

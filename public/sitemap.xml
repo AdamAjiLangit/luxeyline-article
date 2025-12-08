@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml"
+>
+  <!-- 🇮🇩 Bahasa Indonesia -->
+  <url>
+    <loc>https://silughoh.com/</loc>
+    <lastmod>2025-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://silughoh.com/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://silughoh.com/en/" />
+  </url>
+
+  <url>
+    <loc>https://silughoh.com/tentang</loc>
+    <lastmod>2025-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://silughoh.com/tentang" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://silughoh.com/en/about" />
+  </url>
+
+  <url>
+    <loc>https://silughoh.com/kontak</loc>
+    <lastmod>2025-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://silughoh.com/kontak" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://silughoh.com/en/contact" />
+  </url>
+
+  <url>
+    <loc>https://silughoh.com/kebijakan</loc>
+    <lastmod>2025-10-16</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://silughoh.com/kebijakan" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://silughoh.com/en/privacy-policy" />
+  </url>
+
+  <url>
+    <loc>https://silughoh.com/syarat-ketentuan</loc>
+    <lastmod>2025-10-16</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://silughoh.com/syarat-ketentuan" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://silughoh.com/en/terms" />
+  </url>
+
+  <url>
+    <loc>https://silughoh.com/pengembalian-dana</loc>
+    <lastmod>2025-10-16</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://silughoh.com/pengembalian-dana" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://silughoh.com/en/refund-policy" />
+  </url>
+
+  <!-- 🇬🇧 Bahasa Inggris -->
+  <url>
+    <loc>https://silughoh.com/en/</loc>
+    <lastmod>2025-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://silughoh.com/en/about</loc>
+    <lastmod>2025-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://silughoh.com/en/contact</loc>
+    <lastmod>2025-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://silughoh.com/en/privacy-policy</loc>
+    <lastmod>2025-10-16</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://silughoh.com/en/terms</loc>
+    <lastmod>2025-10-16</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://silughoh.com/en/refund-policy</loc>
+    <lastmod>2025-10-16</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+</urlset>

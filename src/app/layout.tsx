@@ -14,44 +14,27 @@ import ClientLayout from "@/client-layout";
 // });
 
 export const metadata: Metadata = {
-  title: 'Si Lughoh | Aplikasi Belajar Bahasa Seru & Interaktif',
+  title: 'Luxeyline News | Artikel Real Estate Terbaru',
   description:
-    'Si Lughoh adalah aplikasi belajar bahasa berbasis gamifikasi yang seru dan interaktif. Latih kemampuan listening dan speaking Anda dengan cara menyenangkan hanya Rp100.000/bulan!',
+    'Selamat datang di Luxeyline News — sumber terpercaya Anda untuk berita, tren, dan insight terbaru di dunia properti mewah. Tetap terdepan dengan update berkualitas dari tim editorial kami.',
   openGraph: {
-    title: 'Si Lughoh | Belajar Bahasa Jadi Seru!',
+    title: 'Luxeyline News | Artikel Real Estate Terbaru',
     description:
-      'Tingkatkan kemampuan listening dan speaking dengan Si Lughoh — aplikasi belajar bahasa dengan sistem gamifikasi seru dan interaktif. Coba sekarang, langganan hanya Rp100.000/bulan!',
-    url: 'https://silughoh.com/',
-    siteName: 'Si Lughoh',
+      'Dapatkan wawasan mendalam tentang pasar properti mewah, tren terbaru, dan artikel pilihan yang dikurasi oleh tim Luxeyline.',
+    url: 'https://luxeyline-articles.netlify.app/',
+    siteName: 'Luxeyline News',
     images: [
       {
-        url: '/assets/images/silughoh-og.png',
+        url: 'assets/images/luxeyline.png',
         width: 1200,
         height: 630,
-        alt: 'Si Lughoh | Aplikasi Belajar Bahasa Interaktif',
+        alt: 'Luxeyline News | Artikel Properti Mewah',
       },
     ],
     type: 'website',
   },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Si Lughoh | Aplikasi Belajar Bahasa Seru & Interaktif',
-    description:
-      'Belajar bahasa asing dengan gamification interaktif. Latihan listening & speaking makin seru bersama Si Lughoh!',
-    images: ['/assets/images/silughoh-og.png'],
-  },
-  keywords: [
-    'Si Lughoh',
-    'aplikasi belajar bahasa',
-    'belajar speaking online',
-    'belajar listening interaktif',
-    'gamification language learning',
-    'aplikasi belajar bahasa Indonesia',
-    'belajar bahasa seru',
-  ],
-  authors: [{ name: 'Tim Si Lughoh' }],
-  metadataBase: new URL('https://silughoh.com'),
 }
+
 
 export default function RootLayout({
   children,

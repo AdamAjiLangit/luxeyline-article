@@ -1,69 +1,91 @@
-import { BookUp2, Gamepad2, Headphones, Megaphone } from "lucide-react";
+import { CarouselImage } from "@/components/pages/homepage/carousel";
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+import { redirect } from 'next/navigation';
+import { MoveRight } from "lucide-react";
+import { GridSlice } from "@/components/pages/homepage/grid-slice";
+import { NewsSection } from "@/components/pages/homepage/news-section";
+import { ContactSection } from "@/components/pages/homepage/contact-section";
 import { ReactLenis } from "lenis/react";
 import React from "react";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import TestimoniSection from "@/components/pages/homepage/testimonial";
-import PricingSection from "@/components/pages/homepage/pricing";
-import FAQSection from "@/components/pages/homepage/faq";
+import TextReveal from "@/components/ui/text-reveal";
+import AnimatedLinkNew from "@/components/ui/animated-link-new";
 
-export default function Home() {
+export default async function Home() {
+  const session = await getServerSession(authOptions);
+
+  if (session?.user?.role === 'admin') {
+    redirect('/dashboard');
+  };
+
   return (
     <ReactLenis root options={{ lerp: 0.1, duration: 1.5, smoothWheel: true }}>
-      <div className="flex flex-col mt-52 px-6 md:px-14 gap-5">
-        <h1 className="text-3xl md:text-4xl mb-5 font-bold leading-12">Belajar Bahasa Jadi Seru dengan<br className="block xl:hidden" /> <span className="bg-[#1FADE1] p-1 rounded-xl border border-black text-white border-dashed">Si Lughoh!</span></h1>
-        <p>Aplikasi interaktif dengan sistem gamifikasi — tingkatkan listening & speaking-mu dengan cara yang menyenangkan!</p>
-        <div className="flex flex-col md:flex-row items-start md:items-center gap-5">
-          <Button className="w-fit h-12 bg-gradient-to-b cursor-pointer px-8 py-6 from-[#D53C67] to-[#c95978] text-white font-semibold hover:opacity-90 transition-all" size="lg">
-            <Image src="/assets/images/ps.png" alt="Play Store" width={25} height={25} />
-            Unduh di Play Store
-          </Button>
-          <Button variant="ghost" className="border w-fit cursor-pointer border-gray-400 px-8 py-6 bg-transparent text-gray-700 flex items-center gap-2"
-          >
-            <Image src="/assets/images/apple.png" alt="Play Store" width={25} height={25} />
-            Unduh di App Store
-          </Button>
+      <div className="flex flex-col items-center justify-center mt-32">
+        <div className="flex items-center gap-2 text-green-800">
+          <TextReveal delay={0.3}>
+            <p className="text-lg">⋇</p>
+          </TextReveal>
+          <TextReveal delay={0.3}>
+            <p className="text-sm font-lora">Top 1 Trusted Home Sales</p>
+          </TextReveal>
         </div>
-        <Image src="/assets/images/mockup.png" alt="Hero Image" width={300} height={300} className="xl:absolute top-20 right-20" />
-        <div className="mt-52 flex flex-col gap-5">
-          <h2 className="text-3xl font-medium">Kenapa Harus <span className="underline decoration-[#1FADE1]">Si Lughoh?</span></h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 py-5">
-            {/* Card 1 */}
-            <div className="border rounded-xl p-6 flex flex-col items-center text-center">
-              <Headphones size={40} color="#D53C67" />
-              <h3 className="text-lg font-semibold mt-4">Listening Real-Life</h3>
-              <p className="text-gray-600 mt-2">Dengarkan percakapan nyata, bukan suara robot.</p>
-            </div>
-
-            {/* Card 2 */}
-            <div className="border rounded-xl p-6 flex flex-col items-center text-center">
-              <Megaphone size={40} color="#D53C67" />
-              <h3 className="text-lg font-semibold mt-4">Speaking Interaktif</h3>
-              <p className="text-gray-600 mt-2">Latihan bicara dengan AI dan dapatkan feedback langsung.</p>
-            </div>
-
-            {/* Card 3 */}
-            <div className="border rounded-xl p-6 flex flex-col items-center text-center">
-              <Gamepad2 size={40} color="#D53C67" />
-              <h3 className="text-lg font-semibold mt-4">Gamification Seru</h3>
-              <p className="text-gray-600 mt-2">Dapatkan XP, naik level, dan buka badge tiap pencapaian.</p>
-            </div>
-
-            {/* Card 4 */}
-            <div className="border rounded-xl p-6 flex flex-col items-center text-center">
-              <BookUp2 size={40} color="#D53C67" />
-              <h3 className="text-lg font-semibold mt-4">Materi Bertingkat</h3>
-              <p className="text-gray-600 mt-2">Dari pemula hingga mahir, semuanya terstruktur.</p>
-            </div>
+        <TextReveal delay={0.3}>
+          <h1 className="px-5 md:px-0 text-xl md:text-[3.5vw] tracking-tighter text-center mt-4 mb-2 max-w-[1350px]">
+            You&apos;re Looking for a comfortable and luxurious family
+            stay, we have something for everyone.
+          </h1>
+        </TextReveal>
+        <TextReveal delay={0.3}>
+          <p className="px-5 md:px-0 text-[#9a9696] max-w-[700px] text-sm md:text-base text-center mb-14 font-lora">
+            Our properties are situated in the most sought-after neighborhoods, <br /> offering prime access to amenities, entertainment, and prestigious schools.
+          </p>
+        </TextReveal>
+        <CarouselImage />
+      </div>
+      <div className="flex flex-col px-5 md:px-14 gap-10 md:gap-20 mb-20">
+        <TextReveal animateOnScroll={true}>
+          <h1 className="text-xl md:text-[2.5vw] tracking-tighter">We Are <br /> Luxeyline</h1>
+        </TextReveal>
+        <div className="flex flex-col-reverse lg:flex-row items-start gap-5 lg:gap-0 lg:items-end justify-between w-full">
+          <AnimatedLinkNew
+            id="learn-more"
+            title="Learn more about us"
+            href="/user/about"
+            rightIcon={<MoveRight className="w-4 md:w-10" />}
+            containerClass="bg-transparent flex-center text-sm md:text-base text-green-800"
+          />
+          <div className="flex items-center gap-5">
+            <div className="w-[2px] h-24 bg-black" />
+            <TextReveal animateOnScroll={true}>
+              <p className="max-w-[600px] text-sm md:text-lg font-lora tracking-tight">
+                Discover our handpicked collection of luxury homes and
+                From sleek, modern designs to classic, apartments.
+                timeless elegance, our properties boast exceptional quality
+                and stunning architecture.
+              </p>
+            </TextReveal>
           </div>
         </div>
-        <div className="mt-10">
-          <h2 className="text-3xl font-medium">Apa <span className="underline decoration-[#1FADE1]">Kata</span> Mereka</h2>
-          <TestimoniSection />
-        </div>
       </div>
-      <PricingSection />
-      <FAQSection />
+      <div className="flex flex-col px-5 md:px-14 mb-20 gap-20">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-2">
+          <TextReveal animateOnScroll={true}>
+            <h1 className="text-xl md:text-[3.5vw] tracking-tighter">Today&apos;s Top Strories in <br /> High-End Real Estate</h1>
+          </TextReveal>
+          <TextReveal animateOnScroll={true}>
+            <p className="text-[#9a9696] max-w-[500px] font-lora text-sm md:text-base">
+              From insider insights to expert analysis, discover everything you need to know to make informed decisions in the high-end property market.
+            </p>
+          </TextReveal>
+        </div>
+        <GridSlice />
+      </div>
+      <div className="px-5 md:px-14">
+        <NewsSection />
+      </div>
+      <div className="flex flex-col px-5 md:px-14 mb-20 gap-20">
+        <ContactSection />
+      </div>
     </ReactLenis >
   );
 }
